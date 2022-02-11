@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 
 
+let customers = [];
+
+
 let rooms = [];
 app.use(express.json());
 
@@ -19,7 +22,15 @@ app.get("/rooms", (req, res) => {
 });
 
 
-let customers = [];
+app.get("/list-all-room-data", (req, res) => {
+  res.json(customers);
+});
+
+
+app.get("/list-all-customer-data", (req, res) => {
+  const result = customers.map(({ bookedStatus, ...rest }) => rest);
+  res.json(result);
+});
 
 
 app.post("/create-customers", (req, res) => {
@@ -34,10 +45,6 @@ app.get("/customers", (req, res) => {
   res.json(customers);
 });
 
-
-app.get("/allRoomBookedData", (req, res) => {
-  res.json(customers);
-});
 
 
 app.listen(3000);
